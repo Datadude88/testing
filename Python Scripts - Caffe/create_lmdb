@@ -1,0 +1,23 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from PIL import Image
+import caffe
+import pandas as pd
+import lmdb
+
+caffe.Net()
+
+net = caffe.Net('/home/tsawicki/Desktop/conv.prototxt', caffe.TEST)
+
+file = pd.read_csv('/home/tsawicki/Documents/Python Input/Out/3Views_train.csv',sep=',',header=None)
+file2 = pd.read_csv('/home/tsawicki/Documents/Python Input/Out/3Views_val.csv',sep=',',header=None)
+train = file[(file[2]==0) | (file[2]==2) | (file[2]==4)]
+val = file2[(file2[2]==0) | (file2[2]==2) | (file2[2]==4)]
+
+numTrainSamples = len(train)
+numTestSamples = len(val)
+
+xTrain = np.zeros(shape = [numTrainSamples, 1, IMAGE_SIZE, IMAGE_SIZE])
+yTrain = np.empty(shape = [numTrainSamples])
+xTest = np.zeros(shape = [numTestSamples, 1, IMAGE_SIZE, IMAGE_SIZE])
+yTest = np.empty(shape = [numTestSamples])
